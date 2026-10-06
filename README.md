@@ -10,7 +10,7 @@ assets/           ← logo, banner, icons, fonts
 assets/originals/ ← your original full-size images (kept as a backup)
 404.html          ← the "page not found" page
 robots.txt, sitemap.xml ← help Google find the site
-_headers, netlify.toml  ← hosting settings (no need to touch)
+_headers, netlify.toml, vercel.json ← hosting settings (no need to touch)
 ```
 
 ---
@@ -101,6 +101,8 @@ Nothing has been signed up for or bought on your behalf. Everything below is fre
    - Build command: *(leave empty)*
    - Build output directory: *(leave empty; if it insists on a value, type `/`)*
 5. Click **Save and Deploy**. After about a minute you get a live, secure (HTTPS) address like `https://ftr-website.pages.dev`. **That's your live site.**
+
+*Prefer Vercel?* Go to **vercel.com** → sign up with GitHub → **Add New… → Project** → **Import** `ftr-website`. Set Framework Preset to **Other**, leave the build command and output directory empty, then click **Deploy**. You get an address like `https://ftr-website.vercel.app`. Hosting settings are in `vercel.json`. For a custom domain: **Project → Settings → Domains**.
 
 *Prefer Netlify?* Go to **app.netlify.com** → **Add new site → Import an existing project → GitHub**, pick `ftr-website`, leave the build command empty and set the publish directory to `.`, then click **Deploy**. Use one host, not both.
 

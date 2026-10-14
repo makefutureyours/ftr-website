@@ -23,7 +23,8 @@
       navigator.clipboard.writeText(code).then(() => {
         const original = copyBtn.textContent;
         copyBtn.textContent = 'Copied!';
-        setTimeout(() => { copyBtn.textContent = original; }, 1500);
+        copyBtn.classList.add('copied');
+        setTimeout(() => { copyBtn.textContent = original; copyBtn.classList.remove('copied'); }, 1500);
       }).catch(() => {});
     });
   }
@@ -69,6 +70,7 @@
       iframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture';
       iframe.allowFullscreen = true;
       thumb.replaceChildren(iframe);
+      thumb.classList.add('is-playing');
       iframe.focus();
     });
   });

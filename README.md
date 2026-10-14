@@ -6,6 +6,7 @@ This is a simple website made of plain files. There is no "build" step: what you
 index.html        ← all the words on the page
 css/styles.css    ← colours, fonts, layout
 js/main.js        ← small extras (fade-in, Copy button, YouTube cards)
+css/animations.css, js/animations.js ← all the extra movement (see section 7)
 assets/           ← logo, banner, icons, fonts
 assets/originals/ ← your original full-size images (kept as a backup)
 404.html          ← the "page not found" page
@@ -113,6 +114,17 @@ Nothing has been signed up for or bought on your behalf. Everything below is fre
 3. HTTPS (the padlock) is switched on automatically, usually within 15 minutes.
 4. Replace `https://your-domain.example` with the real domain (see the placeholder table above) and save.
 5. Optional: add the site to **Google Search Console** (search.google.com/search-console) and submit `https://your-real-domain/sitemap.xml` so Google finds it faster.
+
+---
+
+## 7. Animation
+
+All the movement (headings rising word by word, cards arriving one by one, the dotted path drawing itself, growing gold bars, floating gold stars, button shine, hover effects) lives in two files: `css/animations.css` and `js/animations.js`.
+
+- **To switch it all off:** delete these two lines in `index.html` and save:
+  `<link rel="stylesheet" href="css/animations.css">` and `<script src="js/animations.js" defer></script>`
+- People who turn on "reduce motion" on their phone or computer automatically see the calm version.
+- The text and layout are exactly the same with or without animation.
 
 ---
 

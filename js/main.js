@@ -1,5 +1,5 @@
 // FTR Future Rise Enterprise — site behaviour
-// 1) Fade sections in as you scroll  2) "Copy" button for the access code  3) YouTube cards
+// 1) Fade sections in as you scroll  2) "Copy" button for the access code  3) YouTube cards  4) Phone menu
 
 (function () {
   // 1. Scroll reveal
@@ -9,7 +9,7 @@
       entries.forEach(e => {
         if (e.isIntersecting) { e.target.classList.add('is-visible'); io.unobserve(e.target); }
       });
-    }, { threshold: 0.15 });
+    }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
     els.forEach(el => io.observe(el));
   } else {
     els.forEach(el => el.classList.add('is-visible'));
@@ -74,4 +74,14 @@
       iframe.focus();
     });
   });
+  // 4. Phone menu (the ☰ button in the top bar)
+  const bar = document.querySelector('.topbar');
+  const menuBtn = bar && bar.querySelector('.menu-btn');
+  if (menuBtn) {
+    const setOpen = (open) => { bar.classList.toggle('open', open); menuBtn.setAttribute('aria-expanded', open); };
+    menuBtn.addEventListener('click', () => setOpen(!bar.classList.contains('open')));
+    bar.querySelectorAll('.nav-menu a').forEach(a => a.addEventListener('click', () => setOpen(false)));
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') setOpen(false); });
+    document.addEventListener('click', e => { if (!bar.contains(e.target)) setOpen(false); });
+  }
 })();

@@ -9,10 +9,10 @@
   Cache-Control: public, max-age=604800
 
 /css/*
-  Cache-Control: public, max-age=3600
+  Cache-Control: public, max-age=0, must-revalidate
 
 /js/*
-  Cache-Control: public, max-age=3600
+  Cache-Control: public, max-age=0, must-revalidate
 
 /README.md
   X-Robots-Tag: noindex

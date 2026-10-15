@@ -1,4 +1,4 @@
-// FTR Future Rise Enterprise — extra animation
+// FTR Future Rise Enterprise — animation
 // Works together with css/animations.css. Delete both lines in index.html to switch off.
 // Does nothing for visitors who have "reduce motion" turned on.
 
@@ -6,39 +6,39 @@
   if (!window.matchMedia || !matchMedia('(prefers-reduced-motion: no-preference)').matches) return;
   const finePointer = matchMedia('(hover: hover) and (pointer: fine)').matches;
 
-  // --- Helpers -------------------------------------------------------------
   function onVisible(el, cb, threshold) {
     if (!('IntersectionObserver' in window)) { cb(el); return; }
-    const io = new IntersectionObserver((entries) => {
+    const io = new IntersectionObserver(entries => {
       entries.forEach(e => { if (e.isIntersecting) { cb(e.target); io.unobserve(e.target); } });
-    }, { threshold: threshold || 0.15 });
+    }, { threshold: threshold || 0.1 });
     io.observe(el);
   }
 
-  // --- 1. Groups that arrive one item at a time ---------------------------
-  const groups = '.who-grid, .cards, .tag-row, .stops-3, .fitlist, .video-grid, .pyramid, .compare-split, .culture-duo, .journey-strip';
-  document.querySelectorAll(groups).forEach(g => {
+  // 1. Groups arrive one item at a time
+  document.querySelectorAll('.grid, .chips, .stages, .fitlist, .ways, .video-grid, .pyramid, .compare, .journey, .timeline').forEach(g => {
     const kids = [...g.children];
     kids.forEach((k, i) => k.style.setProperty('--i', i));
     if (!g.classList.contains('reveal')) return;
     g.classList.add('stagger');
-    onVisible(g, () => setTimeout(() => g.classList.add('settled'), kids.length * 85 + 900));
+    onVisible(g, () => setTimeout(() => g.classList.add('settled'), kids.length * 80 + 1000));
   });
   document.querySelectorAll('#path .stop').forEach((s, i) => s.style.setProperty('--i', i));
 
-  // --- 2. Headings: words rise into place ---------------------------------
-  document.querySelectorAll('.section-head h2, .cta h2').forEach(h => {
+  // 2. Headings: words rise into place (dark-section headings end in shimmering gold)
+  document.querySelectorAll('.section-head h2, .about h2, .cta h2').forEach(h => {
     if (!h.closest('.reveal') || h.children.length) return;
-    const words = h.textContent.trim().split(/\s+/);
-    h.setAttribute('aria-label', h.textContent.trim());
+    const text = h.textContent.trim();
+    const words = text.split(/\s+/);
+    h.setAttribute('aria-label', text);
     h.innerHTML = words.map((w, i) =>
       '<span class="w" aria-hidden="true"><span style="--w:' + i + '">' + w.replace(/&/g, '&amp;').replace(/</g, '&lt;') + '</span></span>'
     ).join(' ');
     h.classList.add('split');
+    if (h.closest('.dark')) [...h.querySelectorAll('.w > span')].slice(-2).forEach(s => s.classList.add('gold'));
   });
 
-  // --- 3. Arrows in text links nudge on hover (buttons lift instead) ----------------------------------
-  document.querySelectorAll('a:not(.btn)').forEach(a => {
+  // 3. Arrows in text links nudge on hover
+  document.querySelectorAll('a:not(.btn), .way-link').forEach(a => {
     const last = a.lastChild;
     if (!last || last.nodeType !== 3) return;
     const m = last.textContent.match(/^(.*?)\s*([→↗])\s*$/s);
@@ -51,32 +51,37 @@
     a.appendChild(s);
   });
 
-  // --- 4. Dotted path draws itself ----------------------------------------
-  // (watch the stops below it: the line itself starts fully clipped, so it never counts as "visible")
+  // 4. Dotted path draws itself (watch the stops below it)
   const path = document.querySelector('.path-svg');
   const stops = path && path.nextElementSibling;
   if (stops) onVisible(stops, () => path.classList.add('is-visible'), 0.1);
 
-  // --- 5. Scroll progress bar, nav shadow, banner parallax ----------------
+  // 5. A spark travels along each journey line
+  document.querySelectorAll('.journey').forEach(strip => {
+    const r = document.createElement('span');
+    r.className = 'runner';
+    r.setAttribute('aria-hidden', 'true');
+    strip.prepend(r);
+  });
+
+  // 6. Scroll progress bar + top bar shrinks after scrolling
   const bar = document.createElement('div');
   bar.className = 'scroll-progress';
   bar.setAttribute('aria-hidden', 'true');
   document.body.appendChild(bar);
-  const nav = document.querySelector('nav');
-  const banner = document.querySelector('.hero-banner');
+  const top = document.querySelector('.topbar');
   let ticking = false;
   function onScroll() {
     const y = window.scrollY;
     const max = document.documentElement.scrollHeight - innerHeight;
     bar.style.setProperty('--progress', max > 0 ? (y / max).toFixed(4) : 0);
-    if (nav) nav.classList.toggle('is-scrolled', y > 10);
-    if (banner && y < innerHeight * 1.2) banner.style.setProperty('--parallax', (y * 0.25).toFixed(1) + 'px');
+    if (top) top.classList.toggle('is-scrolled', y > 40);
     ticking = false;
   }
   addEventListener('scroll', () => { if (!ticking) { ticking = true; requestAnimationFrame(onScroll); } }, { passive: true });
   onScroll();
 
-  // --- 6. Gold spotlight follows the mouse + card tilt (computers only) ---
+  // 7. Mouse effects (computers only): spotlight, card tilt + glare, magnetic buttons
   if (finePointer) {
     document.querySelectorAll('.guide').forEach(sec => {
       sec.addEventListener('pointermove', e => {
@@ -85,55 +90,20 @@
         sec.style.setProperty('--my', (e.clientY - r.top) + 'px');
       });
     });
-    const card = document.querySelector('.assess-card');
-    if (card) {
-      card.addEventListener('pointermove', e => {
-        const r = card.getBoundingClientRect();
-        const x = (e.clientX - r.left) / r.width - 0.5;
-        const y = (e.clientY - r.top) / r.height - 0.5;
-        card.style.setProperty('--ry', (x * 5).toFixed(2) + 'deg');
-        card.style.setProperty('--rx', (-y * 5).toFixed(2) + 'deg');
-      });
-      card.addEventListener('pointerleave', () => {
-        card.style.setProperty('--rx', '0deg');
-        card.style.setProperty('--ry', '0deg');
-      });
-    }
-  }
-
-  // --- 8. Hero: "Discover / Develop / Build" underlined in turn -----------
-  const lead = document.querySelector('.hero-cta .lead');
-  if (lead && !lead.children.length) {
-    let n = 0;
-    lead.innerHTML = lead.textContent.replace(/\b(Discover|Develop|Build)\b/g, w => '<span class="hl" style="--h:' + (n++) + '">' + w + '</span>');
-  }
-
-  // --- 9. Gold shimmer on the last two words of headings in dark sections --
-  document.querySelectorAll('.on-dark h2.split, .cta h2.split').forEach(h => {
-    [...h.querySelectorAll('.w > span')].slice(-2).forEach(s => s.classList.add('gold'));
-  });
-
-  // --- 10. A spark travels along each journey line ------------------------
-  document.querySelectorAll('.journey-strip').forEach(strip => {
-    const r = document.createElement('span');
-    r.className = 'runner';
-    r.setAttribute('aria-hidden', 'true');
-    strip.prepend(r);
-  });
-
-  // --- 11. Cards tilt, buttons lean toward the mouse (computers only) -----
-  if (finePointer) {
-    document.querySelectorAll('.card, .who-card').forEach(c => {
-      c.addEventListener('pointermove', e => {
-        const r = c.getBoundingClientRect();
+    const tilt = (el, strength) => {
+      el.addEventListener('pointermove', e => {
+        const r = el.getBoundingClientRect();
         const x = (e.clientX - r.left) / r.width, y = (e.clientY - r.top) / r.height;
-        c.style.setProperty('--ry', ((x - 0.5) * 8).toFixed(2) + 'deg');
-        c.style.setProperty('--rx', ((0.5 - y) * 8).toFixed(2) + 'deg');
-        c.style.setProperty('--gx', (x * 100).toFixed(1) + '%');
-        c.style.setProperty('--gy', (y * 100).toFixed(1) + '%');
+        el.style.setProperty('--ry', ((x - 0.5) * strength).toFixed(2) + 'deg');
+        el.style.setProperty('--rx', ((0.5 - y) * strength).toFixed(2) + 'deg');
+        el.style.setProperty('--gx', (x * 100).toFixed(1) + '%');
+        el.style.setProperty('--gy', (y * 100).toFixed(1) + '%');
       });
-    });
-    document.querySelectorAll('.btn-primary, .btn-whatsapp, .wa-float').forEach(b => {
+      el.addEventListener('pointerleave', () => { el.style.setProperty('--rx', '0deg'); el.style.setProperty('--ry', '0deg'); });
+    };
+    document.querySelectorAll('.card, .way').forEach(c => tilt(c, 8));
+    document.querySelectorAll('.assess-card').forEach(c => tilt(c, 4));
+    document.querySelectorAll('.btn-gold, .btn-white, .wa-float').forEach(b => {
       b.addEventListener('pointermove', e => {
         const r = b.getBoundingClientRect();
         b.style.setProperty('--bx', ((e.clientX - r.left - r.width / 2) * 0.18).toFixed(1) + 'px');
@@ -143,7 +113,7 @@
     });
   }
 
-  // --- 12. Gold star burst when the access code is copied -----------------
+  // 8. Gold star burst when the access code is copied
   const copyBtn = document.getElementById('copy-code-btn');
   if (copyBtn) copyBtn.addEventListener('click', () => {
     const r = copyBtn.getBoundingClientRect();
@@ -159,7 +129,7 @@
     }
   });
 
-  // --- 13. Floating WhatsApp button: appears after the banner, hides at the end
+  // 9. Floating WhatsApp button: appears after the hero, hides at the end of the page
   const fab = document.querySelector('.wa-float');
   if (fab && 'IntersectionObserver' in window) {
     const watch = [document.querySelector('.hero'), document.querySelector('.cta'), document.querySelector('footer')].filter(Boolean);
@@ -171,20 +141,19 @@
     watch.forEach(el => io.observe(el));
   }
 
-  // --- 7. Floating gold stars in the closing section ----------------------
-  document.querySelectorAll('.cta').forEach(sec => {
-    const count = innerWidth < 600 ? 10 : 18;
+  // 10. Floating gold stars in the hero and the closing section
+  document.querySelectorAll('.hero, .cta').forEach(sec => {
+    const count = innerWidth < 600 ? 8 : 16;
     for (let i = 0; i < count; i++) {
       const s = document.createElement('span');
       s.className = 'spark';
       s.setAttribute('aria-hidden', 'true');
-      const size = 4 + Math.random() * 9;
       s.style.cssText =
         'left:' + (Math.random() * 100).toFixed(1) + '%;' +
-        '--s:' + size.toFixed(1) + 'px;' +
-        '--d:' + (9 + Math.random() * 10).toFixed(1) + 's;' +
+        '--s:' + (4 + Math.random() * 9).toFixed(1) + 'px;' +
+        '--d:' + (10 + Math.random() * 10).toFixed(1) + 's;' +
         '--delay:' + (-Math.random() * 18).toFixed(1) + 's;' +
-        '--o:' + (0.35 + Math.random() * 0.55).toFixed(2) + ';' +
+        '--o:' + (0.3 + Math.random() * 0.5).toFixed(2) + ';' +
         '--h:' + (sec.offsetHeight + 40) + 'px;';
       sec.prepend(s);
     }

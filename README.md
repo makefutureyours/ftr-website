@@ -7,8 +7,7 @@ index.html        ← all the words on the page
 css/styles.css    ← colours, fonts, layout
 js/main.js        ← small extras (fade-in, Copy button, YouTube cards)
 css/animations.css, js/animations.js ← all the extra movement (see section 7)
-css/polish.css    ← the premium look (see section 7)
-assets/           ← logo, banner, icons, fonts
+assets/           ← logo, hero picture, share banner, icons, fonts
 assets/originals/ ← your original full-size images (kept as a backup)
 404.html          ← the "page not found" page
 robots.txt, sitemap.xml ← help Google find the site
@@ -48,13 +47,14 @@ Each image comes in two versions: `.webp` (small and fast) and `.jpg` (a backup 
 
 | Image | Files | Size to export |
 |---|---|---|
-| Top banner | `banner-800`, `banner-1200`, `banner-1800` (.webp and .jpg) | 800, 1200 and 1800 pixels wide, ratio about 2.7 : 1 |
+| Hero picture (summit, in the arch) | `summit` (.webp and .jpg) | about 412 × 492 pixels (portrait) |
+| Share banner (link previews only) | `banner-800`, `banner-1200`, `banner-1800` (.webp and .jpg) | 800, 1200 and 1800 pixels wide, ratio about 2.7 : 1 |
 | Small logo (top bar) | `logo-icon-120` (.webp and .jpg) | 120 pixels wide |
 | Footer logo | `logo-full-200` (.webp and .jpg) | 200 pixels wide |
 
 To make a `.webp` file, use a free site such as **squoosh.app** (open the image, choose WebP, quality about 80, download). If that's too fiddly, you can save only the `.jpg` versions and delete the matching `.webp` files plus their `<source …>` lines in `index.html`. The site will still work, just a little slower.
 
-`banner-1200.jpg` is also the preview picture shown when someone shares the link on WhatsApp or Facebook.
+`banner-1200.jpg` is the preview picture shown when someone shares the link on WhatsApp or Facebook. It isn't shown on the page itself.
 
 ## 4. How to add the YouTube videos
 
@@ -127,7 +127,7 @@ All the movement (headings rising word by word, cards arriving one by one, the d
 - People who turn on "reduce motion" on their phone or computer automatically see the calm version.
 - The text and layout are exactly the same with or without animation.
 
-**Design polish:** the more premium look (navy hero under the banner, pill buttons, softer cards, FAQ cards, gold panel) lives in `css/polish.css`. Delete its line in `index.html` to go back to the plain look.
+**After editing `css/` or `js/` files:** nothing extra to do. The site tells browsers to always check for the newest version. (The `?v=8` at the end of those links in `index.html` can stay as it is.)
 
 **Floating WhatsApp button:** the gold "WhatsApp us" button in the bottom-right corner is the `<a class="wa-float" …>` block near the end of `index.html`. Delete that block to remove it.
 

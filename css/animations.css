@@ -44,14 +44,12 @@
   .hero::before{left:-220px; top:-200px; background:radial-gradient(circle, rgba(229,178,101,.16), transparent 62%);}
   .hero::after{right:-200px; top:120px; background:radial-gradient(circle, rgba(70,120,200,.18), transparent 62%); animation-direction:alternate-reverse;}
   .hero-grid{position:relative; z-index:1;}
-  .hero-copy .eyebrow{animation:wipeIn .9s cubic-bezier(.2,.7,.2,1) .15s both;}
-  .hero h1 .line{animation:lineUp .9s cubic-bezier(.2,.75,.2,1) both;}
-  .hero h1 .line:nth-of-type(2){animation-delay:.12s;}
-  .hero h1 .line:nth-of-type(3){animation-delay:.24s;}
-  .hero h1 .gold-text{background-size:250% 100%; background-image:linear-gradient(100deg, var(--gold-light) 0%, var(--gold) 30%, #fff4dc 45%, var(--gold) 60%, var(--gold-deep) 100%); animation:lineUp .9s cubic-bezier(.2,.75,.2,1) .24s both, goldShimmer 6s linear 1.6s infinite;}
-  .hero .lead{animation:fadeUp .8s cubic-bezier(.2,.7,.2,1) .4s both;}
-  .hero .ctas{animation:fadeUp .8s cubic-bezier(.2,.7,.2,1) .52s both;}
-  .hero-visual{animation:fadeUp 1s cubic-bezier(.2,.7,.2,1) .2s both;}
+  .hero h1 .line{animation:lineUp .6s cubic-bezier(.2,.75,.2,1) both;}
+  .hero h1 .line:nth-of-type(3){animation-delay:.08s;}
+  .hero h1 .gold-text{background-size:250% 100%; background-image:linear-gradient(100deg, var(--gold-light) 0%, var(--gold) 30%, #fff4dc 45%, var(--gold) 60%, var(--gold-deep) 100%); animation:lineUp .6s cubic-bezier(.2,.75,.2,1) .08s both, goldShimmer 6s linear 2s infinite;}
+  .hero .lead{animation:fadeUp .6s cubic-bezier(.2,.7,.2,1) .15s both;}
+  .hero .ctas{animation:fadeUp .6s cubic-bezier(.2,.7,.2,1) .22s both;}
+  .hero-visual{animation:fadeUp .8s cubic-bezier(.2,.7,.2,1) .1s both;}
   .arch img{animation:archZoom 1.6s cubic-bezier(.2,.7,.2,1) both, slowZoom 24s ease-in-out 1.6s infinite alternate;}
   @keyframes archZoom{from{scale:1.18;} to{scale:1;}}
   @keyframes slowZoom{from{scale:1;} to{scale:1.07;}}
@@ -140,8 +138,8 @@
   @keyframes glow{0%,100%{box-shadow:0 0 0 4px rgba(229,178,101,.18);} 50%{box-shadow:0 0 0 9px rgba(229,178,101,.08), 0 0 22px rgba(229,178,101,.55);}}
   .runner{position:absolute; top:9px; left:5%; right:5%; height:2px; pointer-events:none; opacity:0;}
   .journey.is-visible .runner{opacity:1; transition:opacity .4s ease 2.4s;}
-  .runner::after{content:""; position:absolute; top:-3px; left:0; width:8px; height:8px; border-radius:50%; background:#fff4dc; box-shadow:0 0 10px 3px rgba(229,178,101,.9), 0 0 24px 6px rgba(229,178,101,.45); animation:run 4.2s cubic-bezier(.45,.05,.55,.95) 2.4s infinite;}
-  @keyframes run{0%{left:0; opacity:0;} 8%{opacity:1;} 85%{opacity:1;} 100%{left:100%; opacity:0;}}
+  .runner::after{content:""; position:absolute; top:-3px; left:0; width:8px; height:8px; border-radius:50%; background:#fff4dc; box-shadow:0 0 10px 3px rgba(229,178,101,.9), 0 0 24px 6px rgba(229,178,101,.45); animation:run 4.2s cubic-bezier(.45,.05,.55,.95) 2.4s infinite; will-change:transform;}
+  @keyframes run{0%{transform:translateX(0); opacity:0;} 8%{opacity:1;} 85%{opacity:1;} 100%{transform:translateX(var(--rw, 600px)); opacity:0;}}
   .jstage{z-index:1;}
   .jstage:hover .jlabel{color:var(--gold);}
 
@@ -197,7 +195,7 @@
 
   /* ---------- Floating gold stars (hero + closing section) ---------- */
   .cta > .wrap{position:relative; z-index:1;}
-  .spark{position:absolute; bottom:-20px; width:var(--s); height:var(--s); background:var(--gold); clip-path:polygon(50% 0, 61% 39%, 100% 50%, 61% 61%, 50% 100%, 39% 61%, 0 50%, 39% 39%); opacity:0; pointer-events:none; z-index:0; animation:floatUp var(--d) linear var(--delay) infinite; filter:drop-shadow(0 0 4px rgba(229,178,101,.9));}
+  .spark{position:absolute; bottom:-20px; width:var(--s); height:var(--s); background:var(--gold); clip-path:polygon(50% 0, 61% 39%, 100% 50%, 61% 61%, 50% 100%, 39% 61%, 0 50%, 39% 39%); opacity:0; pointer-events:none; z-index:0; animation:floatUp var(--d) linear var(--delay) infinite; will-change:transform;}
 
   /* ---------- Floating WhatsApp button ---------- */
   .wa-float{translate:var(--bx, 0) var(--by, 0); transition:opacity .45s ease, transform .55s cubic-bezier(.3,1.5,.5,1), translate .35s ease;}

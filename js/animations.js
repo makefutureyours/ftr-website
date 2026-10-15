@@ -62,6 +62,8 @@
     r.className = 'runner';
     r.setAttribute('aria-hidden', 'true');
     strip.prepend(r);
+    const size = () => r.style.setProperty('--rw', r.offsetWidth + 'px');
+    size(); addEventListener('resize', size);
   });
 
   // 6. Scroll progress bar + top bar shrinks after scrolling
@@ -141,8 +143,8 @@
     watch.forEach(el => io.observe(el));
   }
 
-  // 10. Floating gold stars in the hero and the closing section
-  document.querySelectorAll('.hero, .cta').forEach(sec => {
+  // 10. Floating gold stars in the hero and the closing section (added once the page has settled)
+  const addStars = () => document.querySelectorAll('.hero, .cta').forEach(sec => {
     const count = innerWidth < 600 ? 8 : 16;
     for (let i = 0; i < count; i++) {
       const s = document.createElement('span');
@@ -158,4 +160,5 @@
       sec.prepend(s);
     }
   });
+  if ('requestIdleCallback' in window) requestIdleCallback(addStars, { timeout: 2500 }); else setTimeout(addStars, 1500);
 })();

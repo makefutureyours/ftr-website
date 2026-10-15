@@ -127,7 +127,7 @@ All the movement (headings rising word by word, cards arriving one by one, the d
 - People who turn on "reduce motion" on their phone or computer automatically see the calm version.
 - The text and layout are exactly the same with or without animation.
 
-**After editing `css/` or `js/` files:** nothing extra to do. The site tells browsers to always check for the newest version. (The `?v=8` at the end of those links in `index.html` can stay as it is.)
+**After editing `css/` or `js/` files:** nothing extra to do. The site tells browsers to always check for the newest version. (The `?v=9` at the end of those links in `index.html` can stay as it is.)
 
 **Floating WhatsApp button:** the gold "WhatsApp us" button in the bottom-right corner is the `<a class="wa-float" …>` block near the end of `index.html`. Delete that block to remove it.
 

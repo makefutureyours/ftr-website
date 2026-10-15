@@ -7,6 +7,7 @@ index.html        ← all the words on the page
 css/styles.css    ← colours, fonts, layout
 js/main.js        ← small extras (fade-in, Copy button, YouTube cards)
 css/animations.css, js/animations.js ← all the extra movement (see section 7)
+css/polish.css    ← the premium look (see section 7)
 assets/           ← logo, banner, icons, fonts
 assets/originals/ ← your original full-size images (kept as a backup)
 404.html          ← the "page not found" page
@@ -125,6 +126,10 @@ All the movement (headings rising word by word, cards arriving one by one, the d
   `<link rel="stylesheet" href="css/animations.css">` and `<script src="js/animations.js" defer></script>`
 - People who turn on "reduce motion" on their phone or computer automatically see the calm version.
 - The text and layout are exactly the same with or without animation.
+
+**Design polish:** the more premium look (navy hero under the banner, pill buttons, softer cards, FAQ cards, gold panel) lives in `css/polish.css`. Delete its line in `index.html` to go back to the plain look.
+
+**Floating WhatsApp button:** the gold "WhatsApp us" button in the bottom-right corner is the `<a class="wa-float" …>` block near the end of `index.html`. Delete that block to remove it.
 
 ---
 

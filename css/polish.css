@@ -1,0 +1,97 @@
+/* ============================================================
+   DESIGN POLISH
+   A more premium look on top of styles.css: same text, same
+   sections, same navy + gold. To go back to the plain look,
+   delete this line in index.html:
+     <link rel="stylesheet" href="css/polish.css">
+   ============================================================ */
+
+:root{
+  --gold-grad:linear-gradient(135deg, #F2C982 0%, var(--gold) 45%, var(--gold-deep) 100%);
+  --shadow-soft:0 1px 2px rgba(2,16,41,.04), 0 10px 28px -18px rgba(2,16,41,.22);
+  --shadow-lift:0 2px 4px rgba(2,16,41,.04), 0 24px 44px -22px rgba(2,16,41,.35);
+  --radius:18px;
+}
+
+/* ---------- Typography ---------- */
+h1,h2,h3{letter-spacing:-.015em;}
+.section-head h2{letter-spacing:-.025em;}
+.section-head p{font-size:17px;}
+.eyebrow::before{content:""; display:inline-block; width:22px; height:2px; margin-right:10px; vertical-align:middle; border-radius:2px; background:currentColor; opacity:.8; position:relative; top:-1px;}
+section{padding:96px 0;}
+@media(max-width:700px){ section{padding:72px 0;} }
+
+/* ---------- Navigation: frosted glass ---------- */
+nav{background:rgba(2,16,41,.88); -webkit-backdrop-filter:saturate(160%) blur(14px); backdrop-filter:saturate(160%) blur(14px);}
+
+/* ---------- Buttons: pill shape, rich gold ---------- */
+.btn{border-radius:999px;}
+.btn-primary{background:var(--gold-grad); box-shadow:0 10px 24px -12px rgba(201,148,74,.85), inset 0 1px 0 rgba(255,255,255,.35);}
+.btn-primary:hover{background:linear-gradient(135deg, var(--gold) 0%, var(--gold-deep) 100%);}
+.btn-ghost{background:#fff;}
+.btn-ghost.on-navy{background:rgba(255,255,255,.04);}
+
+/* ---------- Hero: navy flows on from the banner ---------- */
+.hero-cta{background:radial-gradient(1000px 320px at 50% 115%, #143561 0%, var(--navy-deep) 72%); border-bottom:none; padding:52px 0 72px;}
+.hero-cta .eyebrow{color:var(--gold);}
+.hero-cta p.lead{color:rgba(255,255,255,.82); font-size:20px;}
+.hero-cta .hl{color:#fff;}
+.hero-cta .btn-ghost{background:rgba(255,255,255,.05); border-color:rgba(255,255,255,.3); color:#fff;}
+.hero-cta .btn-ghost:hover{border-color:#fff;}
+
+/* ---------- Grey bands: soft dotted texture ---------- */
+.band{background-color:var(--paper-deep); background-image:radial-gradient(rgba(14,37,68,.07) 1px, transparent 1.2px); background-size:22px 22px; border-color:#E8EBF0;}
+
+/* ---------- Cards ---------- */
+.card, .who-card{border-radius:var(--radius); border-color:#E6E9EF; background:linear-gradient(180deg, #FFFFFF 0%, #FCFCFD 100%); box-shadow:var(--shadow-soft);}
+.card{padding:26px 26px;}
+.card b{font-size:17px; margin-bottom:6px;}
+.who-card{padding:28px 24px; box-shadow:var(--shadow-soft), inset 0 2px 0 rgba(229,178,101,.55);}
+.tag-chip{background:#fff; border-color:rgba(229,178,101,.45); color:var(--navy); box-shadow:0 1px 2px rgba(2,16,41,.05);}
+
+/* ---------- "Four stops" dots ---------- */
+.stop .dot{background:linear-gradient(135deg, var(--navy) 0%, var(--navy-deep) 100%); box-shadow:0 0 0 5px rgba(229,178,101,.16), 0 8px 18px -8px rgba(2,16,41,.6);}
+
+/* ---------- Career Finding Guide card ---------- */
+.assess-card{border-radius:24px; background:linear-gradient(160deg, #13305A 0%, var(--navy-card) 45%, #0B1F3C 100%);}
+.access-item{border-radius:12px;}
+.copy-btn{border-radius:999px;}
+
+/* ---------- Wealth framework ---------- */
+.pyr-bar{background:var(--gold-grad); border-radius:12px 12px 4px 4px; box-shadow:0 14px 28px -16px rgba(201,148,74,.9), inset 0 1px 0 rgba(255,255,255,.35);}
+
+/* ---------- Learn for yourself / Build a career ---------- */
+.compare-split{border-radius:var(--radius); box-shadow:0 30px 60px -30px rgba(0,0,0,.6);}
+.compare-col{padding:34px;}
+.compare-col.build{background:linear-gradient(150deg, #13305A 0%, var(--navy-deep) 100%);}
+
+/* ---------- Videos ---------- */
+.video-card{border-radius:var(--radius); box-shadow:var(--shadow-soft);}
+.video-thumb{background:radial-gradient(circle at 50% 45%, #16365F 0%, var(--navy-deep) 70%);}
+
+/* ---------- FAQ: tidy two-column cards ---------- */
+#faq .wrap{display:grid; grid-template-columns:1fr 1fr; gap:16px;}
+#faq .section-head{grid-column:1 / -1; margin-bottom:28px;}
+.faq-item{border:1px solid #E6E9EF; border-radius:var(--radius); padding:24px 26px; background:#fff; box-shadow:var(--shadow-soft);}
+@media(max-width:760px){ #faq .wrap{grid-template-columns:1fr;} }
+
+/* ---------- "Not sure what direction" panel ---------- */
+.guide-nudge{padding:80px 0;}
+@media(max-width:700px){ .guide-nudge{padding:16px 0 64px;} }
+.guide-nudge .wrap{max-width:860px; width:calc(100% - 32px); padding:52px 32px; border-radius:28px; background:radial-gradient(600px 220px at 50% 0%, #FFF3DD 0%, #FFFBF4 60%, #FFFFFF 100%); border:1px solid rgba(229,178,101,.45); box-shadow:0 30px 60px -36px rgba(201,148,74,.6);}
+
+/* ---------- Closing call-to-action ---------- */
+.cta{background:radial-gradient(900px 420px at 50% 0%, #12305A 0%, var(--navy-deep) 70%);}
+
+/* ---------- Footer ---------- */
+footer{position:relative;}
+footer::before{content:""; position:absolute; top:0; left:0; right:0; height:1px; background:linear-gradient(90deg, transparent, rgba(229,178,101,.6), transparent);}
+
+/* ---------- Hover depth (works with or without animation) ---------- */
+@media (prefers-reduced-motion: no-preference){
+  :is(.card, .who-card, .video-card, .faq-item):hover{box-shadow:var(--shadow-lift);}
+  .faq-item{transition:box-shadow .3s ease, border-color .3s ease;}
+  .faq-item:hover{border-color:rgba(229,178,101,.6);}
+  .faq-item:hover > *{transform:translateX(6px);}
+  .faq-item::before{top:24px; bottom:24px; left:12px;}
+}

@@ -101,6 +101,76 @@
     }
   }
 
+  // --- 8. Hero: "Discover / Develop / Build" underlined in turn -----------
+  const lead = document.querySelector('.hero-cta .lead');
+  if (lead && !lead.children.length) {
+    let n = 0;
+    lead.innerHTML = lead.textContent.replace(/\b(Discover|Develop|Build)\b/g, w => '<span class="hl" style="--h:' + (n++) + '">' + w + '</span>');
+  }
+
+  // --- 9. Gold shimmer on the last two words of headings in dark sections --
+  document.querySelectorAll('.on-dark h2.split, .cta h2.split').forEach(h => {
+    [...h.querySelectorAll('.w > span')].slice(-2).forEach(s => s.classList.add('gold'));
+  });
+
+  // --- 10. A spark travels along each journey line ------------------------
+  document.querySelectorAll('.journey-strip').forEach(strip => {
+    const r = document.createElement('span');
+    r.className = 'runner';
+    r.setAttribute('aria-hidden', 'true');
+    strip.prepend(r);
+  });
+
+  // --- 11. Cards tilt, buttons lean toward the mouse (computers only) -----
+  if (finePointer) {
+    document.querySelectorAll('.card, .who-card').forEach(c => {
+      c.addEventListener('pointermove', e => {
+        const r = c.getBoundingClientRect();
+        const x = (e.clientX - r.left) / r.width, y = (e.clientY - r.top) / r.height;
+        c.style.setProperty('--ry', ((x - 0.5) * 8).toFixed(2) + 'deg');
+        c.style.setProperty('--rx', ((0.5 - y) * 8).toFixed(2) + 'deg');
+        c.style.setProperty('--gx', (x * 100).toFixed(1) + '%');
+        c.style.setProperty('--gy', (y * 100).toFixed(1) + '%');
+      });
+    });
+    document.querySelectorAll('.btn-primary, .btn-whatsapp, .wa-float').forEach(b => {
+      b.addEventListener('pointermove', e => {
+        const r = b.getBoundingClientRect();
+        b.style.setProperty('--bx', ((e.clientX - r.left - r.width / 2) * 0.18).toFixed(1) + 'px');
+        b.style.setProperty('--by', ((e.clientY - r.top - r.height / 2) * 0.25).toFixed(1) + 'px');
+      });
+      b.addEventListener('pointerleave', () => { b.style.setProperty('--bx', '0px'); b.style.setProperty('--by', '0px'); });
+    });
+  }
+
+  // --- 12. Gold star burst when the access code is copied -----------------
+  const copyBtn = document.getElementById('copy-code-btn');
+  if (copyBtn) copyBtn.addEventListener('click', () => {
+    const r = copyBtn.getBoundingClientRect();
+    for (let i = 0; i < 14; i++) {
+      const s = document.createElement('span');
+      const a = (Math.PI * 2 * i) / 14 + Math.random() * 0.4;
+      const d = 40 + Math.random() * 50;
+      s.className = 'burst';
+      s.setAttribute('aria-hidden', 'true');
+      s.style.cssText = 'left:' + (r.left + r.width / 2) + 'px;top:' + (r.top + r.height / 2) + 'px;--tx:' + (Math.cos(a) * d).toFixed(0) + 'px;--ty:' + (Math.sin(a) * d).toFixed(0) + 'px;';
+      document.body.appendChild(s);
+      setTimeout(() => s.remove(), 1000);
+    }
+  });
+
+  // --- 13. Floating WhatsApp button: appears after the banner, hides at the end
+  const fab = document.querySelector('.wa-float');
+  if (fab && 'IntersectionObserver' in window) {
+    const watch = [document.querySelector('.hero'), document.querySelector('.cta'), document.querySelector('footer')].filter(Boolean);
+    const showing = new Set();
+    const io = new IntersectionObserver(entries => {
+      entries.forEach(e => e.isIntersecting ? showing.add(e.target) : showing.delete(e.target));
+      fab.classList.toggle('js-show', showing.size === 0);
+    }, { threshold: 0.05 });
+    watch.forEach(el => io.observe(el));
+  }
+
   // --- 7. Floating gold stars in the closing section ----------------------
   document.querySelectorAll('.cta').forEach(sec => {
     const count = innerWidth < 600 ? 10 : 18;

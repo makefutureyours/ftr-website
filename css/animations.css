@@ -154,3 +154,79 @@
 @media (prefers-reduced-motion: no-preference) and (max-width: 820px){
   .stop.reveal{transition-delay:0s;}
 }
+
+/* ============================================================
+   ROUND 2 — extra sparkle
+   ============================================================ */
+
+/* Floating WhatsApp button (works for everyone, even with animation off) */
+.wa-float{position:fixed; right:18px; bottom:18px; z-index:70; display:flex; align-items:center; gap:10px; height:56px; padding:0 20px 0 16px; border-radius:999px; background:var(--gold); color:var(--navy-deep); font-family:'Inter',sans-serif; font-weight:700; font-size:14.5px; text-decoration:none; box-shadow:0 16px 32px -12px rgba(2,16,41,.6);}
+.wa-float svg{width:24px; height:24px; flex-shrink:0;}
+.wa-float:hover{background:var(--gold-deep);}
+@media (max-width:600px){ .wa-float{width:56px; padding:0; justify-content:center;} .wa-float .wa-label{display:none;} }
+
+@media (prefers-reduced-motion: no-preference){
+
+  /* ---------- Floating WhatsApp button: slides in, pulses ---------- */
+  .wa-float{transition:opacity .45s ease, transform .55s cubic-bezier(.3,1.5,.5,1), background .2s ease; translate:var(--bx,0) var(--by,0);}
+  .js .wa-float:not(.js-show){opacity:0; transform:translateY(24px) scale(.7); pointer-events:none;}
+  .wa-float::before{content:""; position:absolute; inset:0; border-radius:inherit; animation:ring 2.6s ease-out 2s infinite; pointer-events:none;}
+  .wa-float svg{animation:wiggle 5s ease-in-out 3s infinite;}
+  @keyframes wiggle{0%,86%,100%{transform:rotate(0);} 89%{transform:rotate(-14deg);} 92%{transform:rotate(12deg);} 95%{transform:rotate(-6deg);}}
+
+  /* ---------- Hero: drifting gold light + words underlined in turn ---------- */
+  .hero-cta{position:relative; overflow:hidden;}
+  .hero-cta > .wrap{position:relative; z-index:1;}
+  .hero-cta::before, .hero-cta::after{content:""; position:absolute; width:520px; height:520px; border-radius:50%; pointer-events:none; opacity:0; animation:auraIn 2s ease 1.2s forwards, drift 16s ease-in-out 1.2s infinite alternate;}
+  .hero-cta::before{left:-140px; top:-260px; background:radial-gradient(circle, rgba(229,178,101,.22), transparent 65%);}
+  .hero-cta::after{right:-160px; bottom:-300px; background:radial-gradient(circle, rgba(14,37,68,.12), transparent 65%); animation-direction:normal, alternate-reverse;}
+  @keyframes auraIn{to{opacity:1;}}
+  @keyframes drift{0%{transform:translate(0,0) scale(1);} 50%{transform:translate(90px,40px) scale(1.15);} 100%{transform:translate(-40px,70px) scale(.95);}}
+  .hl{color:var(--navy); background:linear-gradient(var(--gold), var(--gold)) no-repeat 0 92% / 0% 3px; animation:hlCycle 7.5s ease-in-out infinite; animation-delay:calc(var(--h) * 2.5s + 1.4s);}
+  @keyframes hlCycle{0%{background-size:0% 3px; background-position:0 92%;} 8%{background-size:100% 3px; background-position:0 92%;} 30%{background-size:100% 3px; background-position:100% 92%;} 38%,100%{background-size:0% 3px; background-position:100% 92%;}}
+  .hero-banner{animation:heroZoom 1.4s cubic-bezier(.2,.7,.2,1) both, kenburns 22s ease-in-out 1.4s infinite alternate;}
+  @keyframes kenburns{from{scale:1;} to{scale:1.04;}}
+
+  /* ---------- Dark sections open up as you scroll into them ---------- */
+  @supports (animation-timeline: view()){
+    .guide, .cta{animation:sectionOpen linear both; animation-timeline:view(); animation-range:entry 0% entry 70%;}
+    @keyframes sectionOpen{from{clip-path:inset(0 6% 0 6% round 36px);} to{clip-path:inset(0 0 0 0 round 0px);}}
+  }
+
+  /* ---------- Gold shimmer on the last words of dark headings ---------- */
+  .split .w > span.gold{background:linear-gradient(100deg, var(--gold) 0%, var(--gold) 35%, #fff4dc 50%, var(--gold) 65%, var(--gold) 100%); background-size:300% 100%; -webkit-background-clip:text; background-clip:text; color:transparent; animation:goldShimmer 6s linear 2s infinite;}
+  @keyframes goldShimmer{from{background-position:100% 0;} to{background-position:-50% 0;}}
+
+  /* ---------- Soft moving light in the grey bands ---------- */
+  .band{position:relative; overflow:hidden;}
+  .band > .wrap{position:relative; z-index:1;}
+  .band::before{content:""; position:absolute; width:700px; height:700px; left:-200px; top:-300px; border-radius:50%; pointer-events:none; background:radial-gradient(circle, rgba(229,178,101,.14), transparent 62%); animation:drift 20s ease-in-out infinite alternate;}
+  .band:nth-of-type(even)::before{left:auto; right:-220px; animation-direction:alternate-reverse;}
+
+  /* ---------- Cards tilt toward the mouse, with a gold glare ---------- */
+  .card{position:relative; overflow:hidden;}
+  :is(.card, .who-card)::after{content:""; position:absolute; inset:0; pointer-events:none; border-radius:inherit; opacity:0; transition:opacity .35s ease; background:radial-gradient(260px circle at var(--gx, 50%) var(--gy, 0%), rgba(229,178,101,.22), transparent 65%);}
+  :is(.card, .who-card):hover::after{opacity:1;}
+  :is(.card, .who-card):hover{transform:perspective(900px) translateY(-6px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg));}
+  .btn{translate:var(--bx, 0) var(--by, 0); transition:transform .25s cubic-bezier(.2,.7,.2,1), translate .35s cubic-bezier(.3,1.4,.5,1), background .2s ease, box-shadow .25s ease, border-color .2s ease;}
+
+  /* ---------- Tags gently float once they've arrived ---------- */
+  .tag-row.settled .tag-chip{animation:bob 4.2s ease-in-out infinite; animation-delay:calc(var(--i) * -.55s);}
+  @keyframes bob{0%,100%{translate:0 0;} 50%{translate:0 -4px;}}
+
+  /* ---------- A spark keeps travelling along the journey lines ---------- */
+  .runner{position:absolute; top:9px; left:5%; right:5%; height:2px; pointer-events:none; z-index:0; opacity:0;}
+  .journey-strip.is-visible .runner{opacity:1; transition:opacity .4s ease 2.4s;}
+  .runner::after{content:""; position:absolute; top:-3px; left:0; width:8px; height:8px; border-radius:50%; background:#fff4dc; box-shadow:0 0 10px 3px rgba(229,178,101,.9), 0 0 24px 6px rgba(229,178,101,.45); animation:run 4.2s cubic-bezier(.45,.05,.55,.95) 2.4s infinite;}
+  @keyframes run{0%{left:0; opacity:0;} 8%{opacity:1;} 85%{opacity:1;} 100%{left:100%; opacity:0;}}
+  .jstage{z-index:1;}
+
+  /* ---------- Light sweeps across the wealth bars ---------- */
+  .pyr-bar{position:relative; overflow:hidden;}
+  .pyr-bar::after{content:""; position:absolute; top:0; bottom:0; left:-70%; width:50%; background:linear-gradient(100deg, transparent, rgba(255,255,255,.5), transparent); transform:skewX(-18deg); animation:barSweep 5s ease-in-out infinite; animation-delay:calc(var(--i) * .35s + 1.8s);}
+  @keyframes barSweep{0%{left:-70%;} 35%,100%{left:140%;}}
+
+  /* ---------- Gold star burst (Copy button) ---------- */
+  .burst{position:fixed; width:10px; height:10px; margin:-5px 0 0 -5px; z-index:80; pointer-events:none; background:var(--gold); clip-path:polygon(50% 0, 61% 39%, 100% 50%, 61% 61%, 50% 100%, 39% 61%, 0 50%, 39% 39%); animation:burst .9s cubic-bezier(.2,.7,.3,1) forwards;}
+  @keyframes burst{0%{transform:translate(0,0) scale(.4) rotate(0); opacity:1;} 100%{transform:translate(var(--tx), var(--ty)) scale(1.2) rotate(200deg); opacity:0;}}
+}
